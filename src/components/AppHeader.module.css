@@ -1,0 +1,66 @@
+.header {
+    display: flex;
+    align-items: center;
+    padding-left: 32px;
+    padding-right: 32px;
+    padding-bottom: 16px;
+    padding-top: 16px;
+    border-bottom: 1px solid #f0f0f0;
+  }
+  
+  .userButton {
+    display: flex;
+    align-items: center;
+    background: none;
+    border: none;
+    padding-left: 0;
+  }
+
+  .arrows{
+    display: flex;
+    align-items: center;
+    align-self: center;
+    background: none;
+    border: none;
+    padding-left: 0;
+  }
+  
+  .avatar {
+    margin-right: 8px;
+  }
+  
+  .icon {
+    margin-left: 4px;
+  }
+  
+  .navMenu {
+    margin-left: auto;
+    display: flex;
+    gap: 24px;
+  }
+
+  .userMenu{
+    display: flex;
+    gap: 24px;
+    align-items: center;
+  }
+  
+  .searchBar {
+    width: 200px;
+    margin-left: auto;
+    margin-right: 16px;
+  }
+
+  .active {
+    color: #0073e6;
+    cursor: pointer;
+  }
+
+  .navItem {
+    cursor: pointer;
+    transition: color 0.3s ease;
+  }
+
+  .navItem:hover {
+    color: #0073e6;
+  }

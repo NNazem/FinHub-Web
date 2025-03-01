@@ -1,0 +1,82 @@
+.Portfolio{
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+    padding-top: 0px;
+    padding-left : 32px;
+    padding-right: 32px;
+    padding-bottom: 24px;
+}
+
+.PortfolioLayout{
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+}
+
+.statCardWrapper {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+    width: 100%;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 10px 0px 10px 0px;
+}
+
+.chartWrapper {
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+    width: 100%;
+    max-height: 100%;
+    
+}
+
+.chartWrapper > :first-child {
+    width: 80%;
+}
+
+.chartWrapper > :nth-child(2) {
+    width: 20%;
+}
+
+.pieChartWrapper{
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+    height: 30%;
+}
+
+.productItem{
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+    width: 5%;
+}
+
+.productItem h4 {
+    margin: 0;
+    padding: 0;
+    border: none;
+}
+
+.ant-list-item-meta-title {
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+  }
+
+  .PortfolioProductsTable .ant-table-thead > tr > th {
+    background-color: #ff4d4f; /* Sfondo rosso */
+    color: white;             /* Colore del testo */
+  }
