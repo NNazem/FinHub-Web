@@ -2,7 +2,9 @@ import React from "react";
 
 import styles from "./Portfolio.module.css";
 
-export default function PortfolioPieChartLegend() {
+export default function PortfolioPieChartLegend({cryptos}) {
+
+  console.log(cryptos);
   return (
     <div
       style={{

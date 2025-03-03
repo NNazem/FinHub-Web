@@ -113,7 +113,7 @@ export default function PortfolioPieChart({products, loading}) {
         <div className={styles.pieChartWrapper}>
           <PieChart products={products} loading={loading}/>
         </div>
-       <PortfolioPieChartLegend />
+       <PortfolioPieChartLegend cryptos={products}/>
       </div>
     </Card>
   );
