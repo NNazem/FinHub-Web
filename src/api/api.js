@@ -130,7 +130,7 @@ async function getUserCoins(userId) {
 export { getUserCoins };
 
 async function GetAmountPerCategory(userId) {
-    const url = `http://localhost:8081/userAmountPerTypologies/${userId}`;
+    const url = `http://localhost:8081/userAmountPerCrypto/${userId}`;
 
     try {
         const response = await fetch(url);

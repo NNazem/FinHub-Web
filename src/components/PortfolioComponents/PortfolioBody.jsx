@@ -1,14 +1,27 @@
 import { Card } from "antd";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import LineChart from "./PortfolioLineChart";
-import PieChart from "./PortfolioPieChart";
 import PortfolioPieChart from "./PortfolioPieChart";
-import PortfolioLineChart from "./PortfolioLineChart";
 
 import styles from "./Portfolio.module.css";
 import PortfolioProducts from "./PortfolioProducts";
+import { getUserCoins } from "../../api/api";
 
 export default function PortfolioBody() {
+
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+
+  useEffect(() => {
+    async function fetchUserCoins() {
+      const response = await getUserCoins(1);
+      setProducts(response);
+      setLoading(false);
+    }
+    fetchUserCoins();
+  }, []);
+
   return (
     <div>
       <div className={styles.chartWrapper}>
@@ -24,9 +37,9 @@ export default function PortfolioBody() {
         >
           <LineChart />
         </Card>
-        <PortfolioPieChart />
+        <PortfolioPieChart products={products} loading={loading}/>
       </div>
-      <PortfolioProducts />
+      <PortfolioProducts products={products} loading={loading}/>
     </div>
   );
 }

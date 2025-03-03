@@ -17,20 +17,10 @@ import styles from "./Portfolio.module.css";
 import PortfolioProductsBar from "./PortfolioProductsBar";
 import { getUserCoins } from "../../api/api";
 
-export default function PortfolioProducts() {
+export default function PortfolioProducts({products, loading}) {
   const [logos, setLogos] = useState({});
-  const [loading, setLoading] = useState(true);
-  const [products, setProducts] = useState([]);
   const [SearchValue, setSearchValue] = useState("");
 
-  useEffect(() => {
-    async function fetchUserCoins() {
-      const response = await getUserCoins(1);
-      setProducts(response);
-      setLoading(false);
-    }
-    fetchUserCoins();
-  }, []);
 
   const filteredProducts = products.filter((product) => {
     return product.name.toLowerCase().includes(SearchValue.toLowerCase());
