@@ -1,5 +1,5 @@
 async function getTransaction(userId, accountId) {
-    const url = `http://localhost:8081/transactions/${userId}/${accountId}`;
+    const url = `${process.env.BACKEND_URL}/transactions/${userId}/${accountId}`;
     
     console.log("url", url);
     
@@ -19,7 +19,7 @@ async function getTransaction(userId, accountId) {
 export { getTransaction };
 
 async function getBankById(bankId) {
-    const url = `http://localhost:8081/bank/${bankId}`
+    const url = `${process.env.BACKEND_URL}/bank/${bankId}`
 
     try {
         const response = await fetch(url);
@@ -38,7 +38,7 @@ async function getBankById(bankId) {
 export { getBankById };
 
 async function getAccountsById(userId) {
-    const url = `http://localhost:8081/accounts/${userId}`;
+    const url = `${process.env.BACKEND_URL}/accounts/${userId}`;
 
 
     try {
@@ -57,7 +57,7 @@ async function getAccountsById(userId) {
 export { getAccountsById };
 
 async function getTransactions(userId) {
-    const url = `http://localhost:8081/transactions/${userId}`;
+    const url = `${process.env.BACKEND_URL}/transactions/${userId}`;
 
     try {
         const response = await fetch(url);
@@ -75,7 +75,7 @@ async function getTransactions(userId) {
 export { getTransactions };
 
 async function getUserTransactionsByMonths(userId, months) {
-    const url = `http://localhost:8081/transactions/${userId}/months/${months}`;
+    const url = `${process.env.BACKEND_URL}/transactions/${userId}/months/${months}`;
 
 
     try {
@@ -94,7 +94,7 @@ async function getUserTransactionsByMonths(userId, months) {
 export { getUserTransactionsByMonths };
 
 async function getCoinInfo(ticker) {
-    const url = `http://localhost:8081/coinInfo/${ticker}`;
+    const url = `${process.env.BACKEND_URL}/coinInfo/${ticker}`;
 
     try {
         const response = await fetch(url);
@@ -112,7 +112,7 @@ async function getCoinInfo(ticker) {
 export { getCoinInfo };
 
 async function getUserCoins(userId) {
-    const url = `http://localhost:8081/userCoins/${userId}`;
+    const url = `${process.env.BACKEND_URL}/userCoins/${userId}`;
 
     try {
         const response = await fetch(url);
@@ -130,7 +130,7 @@ async function getUserCoins(userId) {
 export { getUserCoins };
 
 async function GetAmountPerCategory(userId) {
-    const url = `http://localhost:8081/userAmountPerCrypto/${userId}`;
+    const url = `${process.env.BACKEND_URL}/userAmountPerCrypto/${userId}`;
 
     try {
         const response = await fetch(url);
@@ -149,7 +149,7 @@ export { GetAmountPerCategory };
 
 
 async function getCoins() {
-    const url = `http://localhost:8081/coins`;
+    const url = `${process.env.BACKEND_URL}/coins`;
 
     try {
         const response = await fetch(url);
@@ -167,7 +167,7 @@ async function getCoins() {
 export { getCoins };
 
 async function AddCrypto(userId, crypto){
-    const url = `http://localhost:8081/addCrypto/${userId}`;
+    const url = `${process.env.BACKEND_URL}/addCrypto/${userId}`;
 
     console.log("crypto", crypto);
 
