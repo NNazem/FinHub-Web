@@ -126,7 +126,7 @@ async function getCoinInfo(ticker) {
 export { getCoinInfo };
 
 async function getUserCoins(userId) {
-    const url = `${import.meta.env.VITE_BACKEND_URL}/userCoins/${userId}`;
+    const url = `http://${import.meta.env.VITE_BACKEND_URL}/userCoins/${userId}`;
 
     console.log("url", url);
 
