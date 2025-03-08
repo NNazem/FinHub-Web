@@ -133,10 +133,17 @@ async function getUserCoins(userId) {
 
     try {
         const response = await fetch(url);
-        console.log("response", response);
+
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
+
+        const contentType = response.headers.get("content-type");
+
+        if (!contentType || !contentType.includes("application/json")) {
+            throw new Error("La risposta non è in formato JSON");
+        }
+        
         const data = await response.json();
         return data;
     } catch (error) {
