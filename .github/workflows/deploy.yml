@@ -33,6 +33,7 @@ jobs:
 
             cd /home/frontend || exit 1
 
+            rm -f enviroments.env
             cat > enviroments.env <<EOF_ENV
             BACKEND_URL=${{ secrets.BACKEND_URL }}
       
