@@ -170,6 +170,7 @@ async function AddCrypto(userId, crypto){
     const url = `${process.env.BACKEND_URL}/addCrypto/${userId}`;
 
     console.log("crypto", crypto);
+    
 
     console.log("crypto", JSON.stringify(crypto));
 
