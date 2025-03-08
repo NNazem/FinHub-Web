@@ -1,8 +1,6 @@
 async function getTransaction(userId, accountId) {
-    const url = `${import.meta.env.VITE_BACKEND_URL}/transactions/${userId}/${accountId}`;
-    
-    console.log("url", url);
-    
+    const url = `http://${import.meta.env.VITE_BACKEND_URL}/transactions/${userId}/${accountId}`;
+        
     try {
         const response = await fetch(url);
         if (!response.ok) {
@@ -19,10 +17,7 @@ async function getTransaction(userId, accountId) {
 export { getTransaction };
 
 async function getBankById(bankId) {
-    const url = `${import.meta.env.VITE_BACKEND_URL}/bank/${bankId}`
-
-    console.log("url", url);
-
+    const url = `http://${import.meta.env.VITE_BACKEND_URL}/bank/${bankId}`
 
     try {
         const response = await fetch(url);
@@ -41,11 +36,7 @@ async function getBankById(bankId) {
 export { getBankById };
 
 async function getAccountsById(userId) {
-    const url = `${import.meta.env.VITE_BACKEND_URL}/accounts/${userId}`;
-
-    console.log("url", url);
-
-
+    const url = `http://${import.meta.env.VITE_BACKEND_URL}/accounts/${userId}`;
 
     try {
         const response = await fetch(url);
@@ -63,10 +54,7 @@ async function getAccountsById(userId) {
 export { getAccountsById };
 
 async function getTransactions(userId) {
-    const url = `${import.meta.env.VITE_BACKEND_URL}/transactions/${userId}`;
-
-    console.log("url", url);
-
+    const url = `http://${import.meta.env.VITE_BACKEND_URL}/transactions/${userId}`;
 
     try {
         const response = await fetch(url);
@@ -84,10 +72,7 @@ async function getTransactions(userId) {
 export { getTransactions };
 
 async function getUserTransactionsByMonths(userId, months) {
-    const url = `${import.meta.env.VITE_BACKEND_URL}/transactions/${userId}/months/${months}`;
-
-    console.log("url", url);
-
+    const url = `http://${import.meta.env.VITE_BACKEND_URL}/transactions/${userId}/months/${months}`;
 
     try {
         const response = await fetch(url);
@@ -105,11 +90,8 @@ async function getUserTransactionsByMonths(userId, months) {
 export { getUserTransactionsByMonths };
 
 async function getCoinInfo(ticker) {
-    const url = `${import.meta.env.VITE_BACKEND_URL}/coinInfo/${ticker}`;
+    const url = `http://${import.meta.env.VITE_BACKEND_URL}/coinInfo/${ticker}`;
     
-    console.log("url", url);
-
-
     try {
         const response = await fetch(url);
         if (!response.ok) {
@@ -134,17 +116,8 @@ async function getUserCoins(userId) {
     try {
         const response = await fetch(url);
 
-        console.log("response", response);
-
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        const text = await response.text(); // Leggi il corpo della risposta come testo
-        console.log("Raw Response Body:", text);
-
-        if (!contentType || !contentType.includes("application/json")) {
-            throw new Error("La risposta non è in formato JSON");
         }
 
         const data = await response.json();
@@ -158,10 +131,7 @@ async function getUserCoins(userId) {
 export { getUserCoins };
 
 async function GetAmountPerCategory(userId) {
-    const url = `${import.meta.env.VITE_BACKEND_URL}/userAmountPerCrypto/${userId}`;
-
-    console.log("url", url);
-
+    const url = `http://${import.meta.env.VITE_BACKEND_URL}/userAmountPerCrypto/${userId}`;
 
     try {
         const response = await fetch(url);
@@ -180,10 +150,7 @@ export { GetAmountPerCategory };
 
 
 async function getCoins() {
-    const url = `${import.meta.env.VITE_BACKEND_URL}/coins`;
-
-    console.log("url", url);
-
+    const url = `http://${import.meta.env.VITE_BACKEND_URL}/coins`;
 
     try {
         const response = await fetch(url);
@@ -201,14 +168,7 @@ async function getCoins() {
 export { getCoins };
 
 async function AddCrypto(userId, crypto){
-    const url = `${import.meta.env.VITE_BACKEND_URL}/addCrypto/${userId}`;
-
-    console.log("url", url);
-
-    console.log("crypto", crypto);
-
-
-    console.log("crypto", JSON.stringify(crypto));
+    const url = `http://${import.meta.env.VITE_BACKEND_URL}/addCrypto/${userId}`;
 
     try{
         const response = await fetch(url, {
