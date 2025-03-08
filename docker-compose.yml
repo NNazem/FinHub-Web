@@ -1,0 +1,13 @@
+version: '3.7'
+
+services:
+  frontend:
+    build: .
+    container_name: frontend
+    restart: always
+    ports:
+      - "3000:3000"
+    env_file:
+      - enviroments.env
+    volumes:
+      - ./data:/app/data

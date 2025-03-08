@@ -2,7 +2,6 @@ import { DatePicker, Form, Input, Modal, Select } from "antd";
 import React, { useEffect, useState } from "react";
 
 import { Button } from "antd";
-import { FaPlus } from "react-icons/fa6";
 import { AddCrypto, getCoins, getUserCoins } from "../../api/api";
 
 function PortfolioProductsBar({ searchValue, setSearchValue }) {
@@ -92,7 +91,7 @@ function PortfolioProductsBar({ searchValue, setSearchValue }) {
           }}
           onClick={() => setModalVisible(true)}
         >
-          <FaPlus size={20} />
+          <></>
         </Button>
         <Modal
           title="Add Product"
