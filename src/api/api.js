@@ -21,6 +21,9 @@ export { getTransaction };
 async function getBankById(bankId) {
     const url = `${process.env.BACKEND_URL}/bank/${bankId}`
 
+    console.log("url", url);
+
+
     try {
         const response = await fetch(url);
         if (!response.ok) {
@@ -39,6 +42,9 @@ export { getBankById };
 
 async function getAccountsById(userId) {
     const url = `${process.env.BACKEND_URL}/accounts/${userId}`;
+
+    console.log("url", url);
+
 
 
     try {
@@ -59,6 +65,9 @@ export { getAccountsById };
 async function getTransactions(userId) {
     const url = `${process.env.BACKEND_URL}/transactions/${userId}`;
 
+    console.log("url", url);
+
+
     try {
         const response = await fetch(url);
         if (!response.ok) {
@@ -76,6 +85,8 @@ export { getTransactions };
 
 async function getUserTransactionsByMonths(userId, months) {
     const url = `${process.env.BACKEND_URL}/transactions/${userId}/months/${months}`;
+
+    console.log("url", url);
 
 
     try {
@@ -95,6 +106,9 @@ export { getUserTransactionsByMonths };
 
 async function getCoinInfo(ticker) {
     const url = `${process.env.BACKEND_URL}/coinInfo/${ticker}`;
+    
+    console.log("url", url);
+
 
     try {
         const response = await fetch(url);
@@ -114,6 +128,9 @@ export { getCoinInfo };
 async function getUserCoins(userId) {
     const url = `${process.env.BACKEND_URL}/userCoins/${userId}`;
 
+    console.log("url", url);
+
+
     try {
         const response = await fetch(url);
         if (!response.ok) {
@@ -131,6 +148,9 @@ export { getUserCoins };
 
 async function GetAmountPerCategory(userId) {
     const url = `${process.env.BACKEND_URL}/userAmountPerCrypto/${userId}`;
+
+    console.log("url", url);
+
 
     try {
         const response = await fetch(url);
@@ -151,6 +171,9 @@ export { GetAmountPerCategory };
 async function getCoins() {
     const url = `${process.env.BACKEND_URL}/coins`;
 
+    console.log("url", url);
+
+
     try {
         const response = await fetch(url);
         if (!response.ok) {
@@ -169,8 +192,10 @@ export { getCoins };
 async function AddCrypto(userId, crypto){
     const url = `${process.env.BACKEND_URL}/addCrypto/${userId}`;
 
+    console.log("url", url);
+
     console.log("crypto", crypto);
-    
+
 
     console.log("crypto", JSON.stringify(crypto));
 
