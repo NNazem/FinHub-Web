@@ -20,7 +20,7 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan 167.86.80.4 >> ~/.ssh/known_hosts
 
-      - name: Create Enviroment 
+      - name: Create Enviroment
         run: |
           ssh -i ~/.ssh/id_rsa root@167.86.80.4 << 'EOF'
 
