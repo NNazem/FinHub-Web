@@ -42,8 +42,8 @@ jobs:
 
             cd /home/frontend || exit 1
             git status || exit 1
-            git checkout svil || exit 1
-            git pull origin svil || exit 1
+            git checkout main || exit 1
+            git pull origin main || exit 1
 
             docker-compose down || exit 1
             docker-compose up --build -d || exit 1
