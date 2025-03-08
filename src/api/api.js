@@ -138,12 +138,13 @@ async function getUserCoins(userId) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
 
-        const contentType = response.headers.get("content-type");
+        const text = await response.text(); // Leggi il corpo della risposta come testo
+        console.log("Raw Response Body:", text);
 
         if (!contentType || !contentType.includes("application/json")) {
             throw new Error("La risposta non è in formato JSON");
         }
-        
+
         const data = await response.json();
         return data;
     } catch (error) {
