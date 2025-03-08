@@ -35,7 +35,7 @@ jobs:
 
             rm -f enviroments.env
             cat > enviroments.env <<EOF_ENV
-            BACKEND_URL=${{ secrets.BACKEND_URL }}
+            VITE_BACKEND_URL=${{ secrets.VITE_BACKEND_URL }}
       
       - name: Deploy Frontend
         run: |
