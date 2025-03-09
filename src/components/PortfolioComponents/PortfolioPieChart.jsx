@@ -1,7 +1,6 @@
 import { Line, Pie } from "@ant-design/plots";
 import { Card } from "antd";
 import React, { useEffect, useState } from "react";
-import PortfolioPieChartLegend from "./PortfolioPieChartLegend";
 
 import styles from "./Portfolio.module.css";
 import { GetAmountPerCategory } from "../../api/api";
@@ -10,9 +9,9 @@ import { GetAmountPerCategory } from "../../api/api";
 export function PieChart({products, loading}) {
   const [data, setData] = useState([]);
   
-  let productsNetWorth = products.reduce((sum, product) => sum + product.current_price, 0).toFixed(2);
+  let productsNetWorth = products?.reduce((sum, product) => sum + product.current_price, 0).toFixed(2);
 
-  if(products.length > 3) {
+  if(products?.length > 3) {
     productsNetWorth = Math.round(productsNetWorth);
   }
 
@@ -27,7 +26,7 @@ export function PieChart({products, loading}) {
 
   console.log(products)
 
-  data.forEach((element) => {
+  data?.forEach((element) => {
     element.percentage = ((element.amount * element.current_value / productsNetWorth) * 100);
   });
 
@@ -100,21 +99,11 @@ export default function PortfolioPieChart({products, loading}) {
         boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
         border: "1px solid #f0f0f0",
         overflow: "hidden", // Nasconde il contenuto ineccesso
-        height: "100%",
       }}
     >
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          gap: "10px",
-        }}
-      >
         <div className={styles.pieChartWrapper}>
           <PieChart products={products} loading={loading}/>
         </div>
-       <PortfolioPieChartLegend cryptos={products}/>
-      </div>
     </Card>
   );
 }

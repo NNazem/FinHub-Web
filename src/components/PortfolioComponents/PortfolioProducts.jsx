@@ -22,7 +22,7 @@ export default function PortfolioProducts({products, loading}) {
   const [SearchValue, setSearchValue] = useState("");
 
 
-  const filteredProducts = products.filter((product) => {
+  const filteredProducts = products?.filter((product) => {
     return product.name.toLowerCase().includes(SearchValue.toLowerCase());
   });
 

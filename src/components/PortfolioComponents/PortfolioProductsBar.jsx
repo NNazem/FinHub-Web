@@ -1,4 +1,4 @@
-import { DatePicker, Form, Input, Modal, Select } from "antd";
+import { DatePicker, Form, Input, Modal, Select, Switch } from "antd";
 import React, { useEffect, useState } from "react";
 
 import { Button } from "antd";
@@ -24,13 +24,6 @@ function PortfolioProductsBar({ searchValue, setSearchValue }) {
     },
   };
 
-  const options = [
-    { value: "crypto", label: <span>Crypto</span> },
-    { value: "stock", label: <span>Stock</span> },
-    { value: "etf", label: <span>ETF</span> },
-    { value: "mutual_fund", label: <span>Mutual Fund</span> },
-  ];
-
   function handleSearchChange(e) {
     setSearchValue(e.target.value);
   }
@@ -43,43 +36,45 @@ function PortfolioProductsBar({ searchValue, setSearchValue }) {
     fetchCoins();
   }, []);
 
-  const handleFormSubmit = () => {
+  const handleFormSubmit = async () => {
     const values = form.getFieldsValue();
-    console.log("Form Values:", values);
+    const coin = coins.find((coin) => coin.name === values.Crypto);
 
-    if (type === "crypto") {
-      const coin = coins.find((coin) => coin.name === values.Crypto);
-      const amount = values.Amount;
-      const purchaseDate = values["Purchase Date"];
-      const price = values.Price;
+    const newCoin = {
+      id: coin.id,
+      rank: coin.rank,
+      name: coin.name,
+    };
 
-      setNewProduct({
-        coin,
-        amount,
-        purchaseDate,
-        price,
-      });
-      console.log("New Product:", newProduct);
+    const newProductData = {
+      coin: newCoin,
+      amount: values.Amount,
+      purchase_date: values["Purchase Date"].format("YYYY-MM-DD"),
+      price: values.Price,
+    };
 
-      AddCrypto(1, newProduct);
-    }
-    // You can now use these values as needed, e.g., send them to an API
+    console.log(newProductData);
+    console.log(newCoin);
+
+    await AddCrypto(1, newProductData);
+
     setModalVisible(false);
+    form.resetFields();
   };
 
   return (
     <div style={{ display: "flex", justifyContent: "space-between" }}>
       <div>
-        <h1
-          style={{
-            fontFamily: "Geist Sans, sans-serif",
-            fontSize: "20px",
-            fontWeight: "bold",
-            paddingBottom: "10px",
-          }}
-        >
-          Holdings
-        </h1>
+          <h1
+            style={{
+              fontFamily: "Geist Sans, sans-serif",
+              fontSize: "20px",
+              fontWeight: "bold",
+              paddingBottom: "10px",
+            }}
+          >
+            Holdings
+          </h1>
       </div>
       <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
         <Button

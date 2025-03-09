@@ -182,7 +182,6 @@ async function AddCrypto(userId, crypto){
             throw new Error(`HTTP error! status: ${response.status}`);
         }
         const data = await response.json();
-        console.log("data", data);
         return data;
     } catch (error) {
         console.error('Error adding crypto:', error);
@@ -191,3 +190,21 @@ async function AddCrypto(userId, crypto){
 }
 
 export { AddCrypto };
+
+async function GetUserPortfolioHistoricalValue(userId) {
+    const url = `http://${import.meta.env.VITE_BACKEND_URL}/userPortfolioHistoricalValue/${userId}`;
+
+    try {
+        const response = await fetch(url);
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error fetching historical value:', error);
+        throw error;
+    }
+}
+
+export { GetUserPortfolioHistoricalValue };

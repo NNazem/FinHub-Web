@@ -17,14 +17,7 @@ export default function PortfolioHeader() {
       >
         Tracker
       </h1>
-      <div className={styles.PortfolioLayout}>
-        <div className={styles.statCardWrapper}>
-          <StatCard title="Saldo Conti" value={"€5,000"} />
-          <StatCard title="Saldo Investimenti" value="€5,000" />
-          <StatCard title="Spese Mensili" value="€5,000" />
-          <StatCard title="Numero di Conti" value="€5,000" />
-        </div>
-      </div>
+      
     </div>
   );
 }

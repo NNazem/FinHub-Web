@@ -42,19 +42,18 @@
 }
 
 .chartWrapper > :first-child {
-    width: 80%;
+    width: 70%;
 }
 
 .chartWrapper > :nth-child(2) {
-    width: 20%;
+    width: 30%;
 }
 
 .pieChartWrapper{
     display: flex;
     flex-direction: column;
-    gap: 16px;
     width: 100%;
-    height: 30%;
+    margin-top: 55px;
 }
 
 .productItem{
