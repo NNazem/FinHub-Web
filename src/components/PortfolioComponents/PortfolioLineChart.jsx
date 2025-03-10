@@ -15,7 +15,7 @@ const LineChart = () => {
     }, []);  
 
     const data = historicalData.map((entry) => ({
-      month : new Date(entry.date).toLocaleString("en-GB", { hour: "2-digit", minute: "2-digit"}),
+      month : new Date(entry.date).toLocaleString("en-GB", { day: "2-digit", hour: "2-digit", minute: "2-digit"}),
       value : entry.portfolio_value
     }))
 
