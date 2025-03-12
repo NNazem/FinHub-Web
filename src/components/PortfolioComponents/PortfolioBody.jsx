@@ -1,11 +1,12 @@
 import { Card } from "antd";
 import React, { useEffect, useState } from "react";
-import LineChart from "./PortfolioLineChart";
 import PortfolioPieChart from "./PortfolioPieChart";
 
 import styles from "./Portfolio.module.css";
 import PortfolioProducts from "./PortfolioProducts";
 import { getUserCoins } from "../../api/api";
+import LineChart from "./PortfolioLineChart";
+import PortfolioTransactions from "./PortfolioTransactions";
 
 export default function PortfolioBody() {
 
@@ -22,6 +23,11 @@ export default function PortfolioBody() {
     fetchUserCoins();
   }, []);
 
+
+  if(loading) {
+    return <div>Loading..</div>
+  }
+
   return (
     <div>
       <div className={styles.chartWrapper}>
@@ -35,11 +41,12 @@ export default function PortfolioBody() {
             border: "1px solid #f0f0f0",
           }}
         >
-          <LineChart />
+          <LineChart width={820} height={450}/>
         </Card>
         <PortfolioPieChart products={products} loading={loading}/>
       </div>
       <PortfolioProducts products={products} loading={loading}/>
+      <PortfolioTransactions/>
     </div>
   );
 }

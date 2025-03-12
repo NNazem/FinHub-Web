@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 
 import { Button } from "antd";
 import { AddCrypto, getCoins, getUserCoins } from "../../api/api";
+import { PlusOutlined } from "@ant-design/icons";
 
 function PortfolioProductsBar({ searchValue, setSearchValue }) {
   const [type, setType] = useState("");
@@ -82,11 +83,13 @@ function PortfolioProductsBar({ searchValue, setSearchValue }) {
           style={{
             backgroundColor: "green",
             display: "flex",
-            alignItems: "center",
+            alignItems: "center"          
           }}
           onClick={() => setModalVisible(true)}
         >
-          <></>
+          <>
+          <PlusOutlined />
+          </>
         </Button>
         <Modal
           title="Add Product"
