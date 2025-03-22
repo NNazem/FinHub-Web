@@ -3,7 +3,6 @@ import { Card } from "antd";
 import React, { useEffect, useState } from "react";
 
 import styles from "./Portfolio.module.css";
-import { GetAmountPerCategory } from "../../api/api";
 
 
 export function PieChart({products, loading}) {
@@ -17,9 +16,7 @@ export function PieChart({products, loading}) {
 
   useEffect(() => {
     async function fetchAmountPerCategory() {
-      const response = await GetAmountPerCategory(1);
-      console.log(response);
-      setData(response.amount_per_crypto);
+      setData([]);
     }
     fetchAmountPerCategory(); 
   }, []);

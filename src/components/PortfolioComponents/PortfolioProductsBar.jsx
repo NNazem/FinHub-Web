@@ -2,7 +2,6 @@ import { DatePicker, Form, Input, Modal, Select, Switch } from "antd";
 import React, { useEffect, useState } from "react";
 
 import { Button } from "antd";
-import { AddCrypto, getCoins, getUserCoins } from "../../api/api";
 import { PlusOutlined } from "@ant-design/icons";
 
 function PortfolioProductsBar({ searchValue, setSearchValue }) {
@@ -31,8 +30,7 @@ function PortfolioProductsBar({ searchValue, setSearchValue }) {
 
   useEffect(() => {
     async function fetchCoins() {
-      const response = await getCoins();
-      setCoins(response);
+      setCoins([]);
     }
     fetchCoins();
   }, []);
@@ -57,7 +55,7 @@ function PortfolioProductsBar({ searchValue, setSearchValue }) {
     console.log(newProductData);
     console.log(newCoin);
 
-    await AddCrypto(1, newProductData);
+    //await AddCrypto(1, newProductData);
 
     setModalVisible(false);
     form.resetFields();

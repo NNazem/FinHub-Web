@@ -15,34 +15,36 @@ import { UserOutlined } from "@ant-design/icons";
 
 import styles from "./Portfolio.module.css";
 import PortfolioProductsBar from "./PortfolioProductsBar";
-import { getUserCoins } from "../../api/api";
 
 export default function PortfolioProducts({products, loading}) {
   const [logos, setLogos] = useState({});
   const [SearchValue, setSearchValue] = useState("");
 
 
-  const filteredProducts = products?.filter((product) => {
-    return product.name.toLowerCase().includes(SearchValue.toLowerCase());
+  const filteredProducts = products.Coins.filter((product) => {
+    return product.Coin.name.toLowerCase().includes(SearchValue.toLowerCase());
   });
+
+  console.log(filteredProducts);
 
 const columns = [
   {
     title: "Logo",
-    dataIndex: "coin_market_cap_id",
-    render: (coinMarketCapId) => (
+    dataIndex: "Coin",
+    render: (coin) => (
       <Avatar
         size={32}
-        src={`https://s2.coinmarketcap.com/static/img/coins/64x64/${coinMarketCapId}.png`}
+        src={`https://s2.coinmarketcap.com/static/img/coins/64x64/${coin?.id}.png`}
         icon={<UserOutlined />}
       />
     ),
   },
   {
     title: "Name",
-    dataIndex : "name",
+    dataIndex : "Coin",
+    render: (coin) => coin?.name || "Unknown",
     sorter : {
-      compare: (a,b) => a.name.localeCompare(b.name),
+      compare: (a,b) => a.Coin.name.localeCompare(b.Coin.name),
       multiple: 4,
     }
   },
@@ -56,7 +58,8 @@ const columns = [
   },
   {
     title: "Current Value",
-    dataIndex: "current_price",
+    dataIndex: "Coin",
+    render: (coin) => coin?.quote.USD.price || 0,
     sorter : {
       compare: (a,b) => a.current_price - b.current_price,
       multiple: 1,
@@ -64,7 +67,8 @@ const columns = [
   },
   {
     title: "Amount",
-    dataIndex: "amount",
+    dataIndex: "Amount",
+    render: (amount) => amount || "Unknown",
     sorter : {
       compare: (a,b) => a.amount - b.amount,
       multiple: 5,

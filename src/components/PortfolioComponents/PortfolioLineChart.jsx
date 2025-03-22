@@ -13,9 +13,9 @@ const TimeframeButtons = ({ text, selected, onClick }) => {
   );
 };
 
-const LineChart = () => {
+const LineChart = ({selectedPortfolio}) => {
   const [historicalData, setHistoricalData] = useState([]);
-  const [lastValue, setLastValue] = useState(0);
+  const [totalValue, setTotalValue] = useState(0);
   const [timeframe, setTimeframe] = useState("1D");
 
   function handleClickTimeframe(e) {
@@ -24,20 +24,21 @@ const LineChart = () => {
 
   useEffect(() => {
     async function fetchHistoricalData() {
-      const response = await GetUserPortfolioHistoricalValue(1);
-      setHistoricalData(response);
-      setLastValue(response[response.length - 1].portfolio_value);
+      const historicalData = await getTotalPerPortfolioGroupedByTimestamp(selectedPortfolio);
+      setHistoricalData(historicalData);
+      const totalValue = await getTotalPerPortfolio(selectedPortfolio)
+      setTotalValue(totalValue.total)
     }
     fetchHistoricalData();
-  }, []);
+  }, [selectedPortfolio]);
 
   const data = historicalData.map((entry) => ({
-    month: new Date(entry.date).toLocaleString("en-GB", {
+    month: new Date(entry.timestamp).toLocaleString("en-GB", {
       day: "2-digit",
       hour: "2-digit",
       minute: "2-digit",
     }),
-    Portfolio: entry.portfolio_value,
+    Portfolio: entry.total,
   }));
 
   const config = {
@@ -45,7 +46,6 @@ const LineChart = () => {
     xField: "month",
     yField: "Portfolio",
     smooth: false,
-    // La configurazione del colore in antd va dentro style
     style: {
       stroke: "#32CD32",
       lineWidth: 2,
@@ -86,7 +86,7 @@ const LineChart = () => {
               level={3}
               style={{ color: "#32CD32", margin: 0, padding: 0 }}
             >
-              {lastValue}€
+              {totalValue.toFixed(2)}€
             </Typography.Title>
           </div>
         </div>
@@ -134,6 +134,6 @@ const LineChart = () => {
 };
 
 import React, { useEffect, useState } from "react";
-import { GetUserPortfolioHistoricalValue } from "../../api/api";
+import { getCryptoPerPortfolio, getTotalPerPortfolio, getTotalPerPortfolioGroupedByTimestamp } from "../../api/api";
 
 export default LineChart;

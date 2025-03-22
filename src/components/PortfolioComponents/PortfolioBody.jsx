@@ -4,11 +4,11 @@ import PortfolioPieChart from "./PortfolioPieChart";
 
 import styles from "./Portfolio.module.css";
 import PortfolioProducts from "./PortfolioProducts";
-import { getUserCoins } from "../../api/api";
 import LineChart from "./PortfolioLineChart";
 import PortfolioTransactions from "./PortfolioTransactions";
+import { getCryptoPerPortfolio } from "../../api/api";
 
-export default function PortfolioBody() {
+export default function PortfolioBody({selectedPortfolio}) {
 
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -16,12 +16,12 @@ export default function PortfolioBody() {
 
   useEffect(() => {
     async function fetchUserCoins() {
-      const response = await getUserCoins(1);
+      const response = await getCryptoPerPortfolio(selectedPortfolio);
       setProducts(response);
       setLoading(false);
     }
     fetchUserCoins();
-  }, []);
+  }, [selectedPortfolio], []);
 
 
   if(loading) {
@@ -41,9 +41,8 @@ export default function PortfolioBody() {
             border: "1px solid #f0f0f0",
           }}
         >
-          <LineChart width={820} height={450}/>
+          <LineChart width={820} height={450} selectedPortfolio={selectedPortfolio} />
         </Card>
-        <PortfolioPieChart products={products} loading={loading}/>
       </div>
       <PortfolioProducts products={products} loading={loading}/>
       <PortfolioTransactions/>
