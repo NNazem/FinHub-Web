@@ -59,6 +59,7 @@ const LineChart = ({selectedPortfolio}) => {
       title: "Portfolio",
       formatter: (datum) => datum.Portfolio,
     },
+   
   };
 
   return (

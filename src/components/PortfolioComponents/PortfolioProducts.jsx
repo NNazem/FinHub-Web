@@ -21,9 +21,7 @@ export default function PortfolioProducts({products, loading}) {
   const [SearchValue, setSearchValue] = useState("");
 
 
-  const filteredProducts = products.Coins.filter((product) => {
-    return product.Coin.name.toLowerCase().includes(SearchValue.toLowerCase());
-  });
+  const filteredProducts = products
 
   console.log(filteredProducts);
 

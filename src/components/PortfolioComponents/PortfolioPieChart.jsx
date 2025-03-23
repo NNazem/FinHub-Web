@@ -5,32 +5,26 @@ import React, { useEffect, useState } from "react";
 import styles from "./Portfolio.module.css";
 
 
-export function PieChart({products, loading}) {
-  const [data, setData] = useState([]);
-  
-  let productsNetWorth = products?.reduce((sum, product) => sum + product.current_price, 0).toFixed(2);
 
-  if(products?.length > 3) {
-    productsNetWorth = Math.round(productsNetWorth);
-  }
+export function PieChart({products, loading, totalValue}) {
+  const [data, setData] = useState([]);
 
   useEffect(() => {
-    async function fetchAmountPerCategory() {
-      setData([]);
-    }
-    fetchAmountPerCategory(); 
-  }, []);
+    const data = products?.map((product) => {
+      return {
+        name: product.Coin.name,
+        percentage: product.Percentage * 100
+      };
+    });
 
-  console.log(products)
+    setData(data);
+  }
+  , [products, totalValue]);
 
-  data?.forEach((element) => {
-    element.percentage = ((element.amount * element.current_value / productsNetWorth) * 100);
-  });
-
-  productsNetWorth = productsNetWorth + "€";
+  const label = totalValue + "€";
 
   const config = {
-    data,
+    data : data,
     angleField: "percentage",
     colorField: "name",
     radius: 0.8,
@@ -51,7 +45,7 @@ export function PieChart({products, loading}) {
           fontWeight: "bold",
           color: '#30BF78', // Colore del testo
         },
-        content: `€${productsNetWorth}`, // Mostra il totale calcolato
+        content:  `${label}`,
       },
     },
     legend: false,
@@ -64,7 +58,7 @@ export function PieChart({products, loading}) {
       {
         type: "text",
         style: {
-          text: productsNetWorth,
+          text: `${label}`,
           x: "50%",
           y: "50%",
           textAlign: "center",
@@ -79,7 +73,7 @@ export function PieChart({products, loading}) {
   return <Pie {...config} />;
 };
 
-export default function PortfolioPieChart({products, loading}) {
+export default function PortfolioPieChart({products, loading, totalValue}) {
 
   if (loading) {
     return <div>Loading..</div>
@@ -99,7 +93,7 @@ export default function PortfolioPieChart({products, loading}) {
       }}
     >
         <div className={styles.pieChartWrapper}>
-          <PieChart products={products} loading={loading}/>
+          <PieChart products={products} loading={loading} totalValue={totalValue}/>
         </div>
     </Card>
   );
