@@ -1,17 +1,14 @@
 import React, { useEffect, useState } from "react";
 
-import styles from "./Portfolio.module.css";
-import PortfolioHeader from "./PortfolioHeader";
-import PortfolioBody from "./PortfolioBody";
-import { Menu } from "antd";
-import Navbar from "../Navbar";
-import { getPortfolioByUserId } from "../../api/api";
-
-
+import styles from "../styles/Portfolio.module.css";
+import PortfolioHeader from "../components/portfolio/PortfolioHeader";
+import Navbar from "../components/layout/Navbar";
+import { getPortfolioByUserId } from "../api/api";
+import PortfolioLayout from "../components/portfolio/PortfolioLayout";
 
 function Portfolio() {
   const userId = 2;
-  const [selectedPortfolio, setSelectedPortfolio] = useState([]);
+  const [selectedPortfolio, setSelectedPortfolio] = useState(null);
   const [portfolios, setPortfolios] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -31,18 +28,25 @@ function Portfolio() {
     fetchPortfolios();
   }, []);
 
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <div style={{ display: "flex", flexDirection: "row" }}>
-      <Navbar 
-        portfolios={portfolios} 
-        setPortfolios={setPortfolios} 
-        userId={userId} 
+      <Navbar
+        portfolios={portfolios}
+        setPortfolios={setPortfolios}
+        userId={userId}
         setSelectedPortfolio={setSelectedPortfolio}
         loading={loading}
       />
       <div className={styles.Portfolio}>
         <PortfolioHeader />
-        <PortfolioBody selectedPortfolio={selectedPortfolio}/>
+        <PortfolioLayout
+          loading={loading}
+          selectedPortfolio={selectedPortfolio}
+        />
       </div>
     </div>
   );

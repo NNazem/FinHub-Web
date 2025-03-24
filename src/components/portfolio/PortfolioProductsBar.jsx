@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 
 import { Button } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
+import { getAllCoins } from "../../api/api";
 
 function PortfolioProductsBar({ searchValue, setSearchValue }) {
   const [type, setType] = useState("");
@@ -30,7 +31,8 @@ function PortfolioProductsBar({ searchValue, setSearchValue }) {
 
   useEffect(() => {
     async function fetchCoins() {
-      setCoins([]);
+      const response = await getAllCoins();
+      setCoins(response);
     }
     fetchCoins();
   }, []);

@@ -1,8 +1,7 @@
 import { useState } from 'react'
-import { Table, ConfigProvider } from "antd";
 
 import AppHeader from './components/Header'
-import Portfolio from './components/PortfolioComponents/Portfolio';
+import PortfolioPage from './pages/PortfolioPage';
 
 
 
@@ -15,7 +14,7 @@ function App() {
     <>
     <AppHeader activeTab={activeTab} setActiveTab={setActiveTab} />
     {
-      activeTab === "Portfolio" && <Portfolio />
+      activeTab === "Portfolio" && <PortfolioPage />
     }
     {
       activeTab === "Insights" && <h1>Insights</h1>

@@ -13,7 +13,7 @@ import React, { useEffect, useState } from "react";
 const { Text } = Typography;
 import { UserOutlined } from "@ant-design/icons";
 
-import styles from "./Portfolio.module.css";
+import styles from "../../styles/Portfolio.module.css"
 import PortfolioProductsBar from "./PortfolioProductsBar";
 
 export default function PortfolioProducts({products, loading}) {
@@ -47,29 +47,37 @@ const columns = [
     }
   },
   {
-    title: "Entry Price",
-    dataIndex: "price",
-    sorter: {
-      compare: (a, b) => a.price - b.price,
-      multiple: 2,
+    title: "Holdings",
+    dataIndex: "Amount",
+    render: (amount) => amount || "Unknown",
+    sorter : {
+      compare: (a,b) => a.amount - b.amount,
+      multiple: 5,
     }
   },
   {
-    title: "Current Value",
+    title: "Value",
     dataIndex: "Coin",
-    render: (coin) => coin?.quote.USD.price || 0,
+    render: (coin, record) => {
+      if (coin?.quote?.USD?.price) {
+        const number = coin?.quote.USD.price * record.Amount
+        const formatter = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' });
+
+        return formatter.format(number)
+      }
+      return 0;
+    },
     sorter : {
       compare: (a,b) => a.current_price - b.current_price,
       multiple: 1,
     }
   },
   {
-    title: "Amount",
-    dataIndex: "Amount",
-    render: (amount) => amount || "Unknown",
-    sorter : {
-      compare: (a,b) => a.amount - b.amount,
-      multiple: 5,
+    title: "Cost",
+    dataIndex: "price",
+    sorter: {
+      compare: (a, b) => a.price - b.price,
+      multiple: 2,
     }
   },
   {

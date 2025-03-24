@@ -1,7 +1,7 @@
 import { Card, ConfigProvider, Table } from "antd";
 import React from "react";
 import PortfolioTransactionsBar from "./PortfolioTransactionsBar";
-import styles from "./Portfolio.module.css";
+import styles from "../../styles/Portfolio.module.css"
 
 export default function PortfolioTransactions({ products, loading }) {
   const columns = [

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Menu, Avatar, Input, Button, Popover } from "antd";
 import { DownOutlined, UserOutlined } from "@ant-design/icons";
-import styles from "./AppHeader.module.css";
+import styles from "../styles/AppHeader.module.css";
 
 const AppHeader = ({activeTab, setActiveTab}) => {
   const userMenu = (

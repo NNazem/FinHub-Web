@@ -2,7 +2,7 @@ import { Line, Pie } from "@ant-design/plots";
 import { Card } from "antd";
 import React, { useEffect, useState } from "react";
 
-import styles from "./Portfolio.module.css";
+import styles from "../../styles/Portfolio.module.css"
 
 
 
@@ -68,6 +68,7 @@ export function PieChart({products, loading, totalValue}) {
         },
       },
     ],
+    height: 440,
   };
 
   return <Pie {...config} />;
@@ -83,7 +84,8 @@ export default function PortfolioPieChart({products, loading, totalValue}) {
     <Card
       bodyStyle={{
         padding: "0px",
-        marginTop: "-50px",
+        marginTop: "0px",
+        
       }}
       style={{
         borderRadius: "8px",
