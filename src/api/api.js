@@ -100,7 +100,7 @@ async function getPortfolioByUserId(userId) {
 export { getPortfolioByUserId };
 
 async function addCoinToPortfolio(body){
-    const url = `http://${import.meta.env.VITE_BACKEND_URL}/createPortfolio`;
+    const url = `http://${import.meta.env.VITE_BACKEND_URL}/addCoinToPortfolio`;
 
     try {
         const response = await fetch(url, {
@@ -159,8 +159,8 @@ async function getTotalPerPortfolio(portfolioId){
 
 export { getTotalPerPortfolio };
 
-async function getTotalPerPortfolioGroupedByTimestamp(portfolioId){
-    const url = `http://${import.meta.env.VITE_BACKEND_URL}/GetTotalPerPortfolioGroupedByTimestamp/${portfolioId}`;
+async function getTotalPerPortfolioGroupedByTimestamp(portfolioId, timeframe){
+    const url = `http://${import.meta.env.VITE_BACKEND_URL}/GetTotalPerPortfolioGroupedByTimestamp/${portfolioId}?timeframe=${timeframe}`;
 
     try {
         const response = await fetch(url);

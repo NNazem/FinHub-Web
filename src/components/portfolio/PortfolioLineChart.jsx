@@ -106,15 +106,16 @@ export default function PortfolioLineChart({ selectedPortfolio }) {
 
   useEffect(() => {
     async function fetchHistoricalData() {
+
       const historicalData = await getTotalPerPortfolioGroupedByTimestamp(
-        selectedPortfolio
+        selectedPortfolio, timeframe
       );
       setHistoricalData(historicalData);
       const totalValue = await getTotalPerPortfolio(selectedPortfolio);
       setTotalValue(totalValue.total);
     }
     fetchHistoricalData();
-  }, [selectedPortfolio]);
+  }, [selectedPortfolio, timeframe]);
 
   const data = historicalData.map((entry) => ({
     month: new Date(entry.timestamp).toLocaleString("en-GB", {

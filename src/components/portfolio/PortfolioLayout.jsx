@@ -30,7 +30,7 @@ export default function PortfolioLayout({ loading, selectedPortfolio }) {
         loading={loading}
         totalValue={totalValue}
       />
-      <PortfolioProducts products={products} loading={loading} />
+      <PortfolioProducts products={products} loading={loading} selectedPortfolio={selectedPortfolio} />
       <PortfolioTransactions />
     </div>
   );

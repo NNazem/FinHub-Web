@@ -16,7 +16,7 @@ import { UserOutlined } from "@ant-design/icons";
 import styles from "../../styles/Portfolio.module.css"
 import PortfolioProductsBar from "./PortfolioProductsBar";
 
-export default function PortfolioProducts({products, loading}) {
+export default function PortfolioProducts({products, loading, selectedPortfolio}) {
   const [logos, setLogos] = useState({});
   const [SearchValue, setSearchValue] = useState("");
 
@@ -104,7 +104,7 @@ const columns = [
         border: "1px solid #f0f0f0",
       }}
     >
-      <PortfolioProductsBar setSearchValue={setSearchValue} searchValue={SearchValue} />
+      <PortfolioProductsBar setSearchValue={setSearchValue} searchValue={SearchValue} selectedPortfolio={selectedPortfolio} />
       <ConfigProvider
         theme={{
           components: {

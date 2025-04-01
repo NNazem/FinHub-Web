@@ -3,9 +3,9 @@ import React, { useEffect, useState } from "react";
 
 import { Button } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
-import { getAllCoins } from "../../api/api";
+import { addCoinToPortfolio, getAllCoins } from "../../api/api";
 
-function PortfolioProductsBar({ searchValue, setSearchValue }) {
+function PortfolioProductsBar({ searchValue, setSearchValue, selectedPortfolio }) {
   const [type, setType] = useState("");
   const [coins, setCoins] = useState([]);
   const [newProduct, setNewProduct] = useState([]);
@@ -48,16 +48,16 @@ function PortfolioProductsBar({ searchValue, setSearchValue }) {
     };
 
     const newProductData = {
-      coin: newCoin,
-      amount: values.Amount,
-      purchase_date: values["Purchase Date"].format("YYYY-MM-DD"),
-      price: values.Price,
+      coin_id: parseInt(newCoin.id),
+      portfolio_id: parseInt(selectedPortfolio),
+      //purchase_date: values["Purchase Date"].format("YYYY-MM-DD"),
+      amount: parseFloat(values.Amount)
     };
 
     console.log(newProductData);
     console.log(newCoin);
 
-    //await AddCrypto(1, newProductData);
+    await addCoinToPortfolio(newProductData)
 
     setModalVisible(false);
     form.resetFields();
