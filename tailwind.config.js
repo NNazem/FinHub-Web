@@ -1,22 +1,24 @@
-import franken from "franken-ui/shadcn-ui/preset-quick";
-
 /** @type {import('tailwindcss').Config} */
 export default {
-  presets: [franken()],
-  content: ["index.html", "./src/**/*.{js,jsx,ts,tsx}"],
-  safelist: [
-    {
-      pattern: /^uk-/,
-    },
-    "ProseMirror",
-    "ProseMirror-focused",
-    "tiptap",
-    "mr-2",
-    "mt-2",
-    "opacity-50",
+  content: [
+    "./src/**/*.{js,jsx,ts,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      backdropBlur: {
+        'xl': '30px',
+      },
+      boxShadow: {
+        'visionos': '0 8px 32px 0 rgba(31, 38, 135, 0.15)',
+      },
+      borderRadius: {
+        'visionos': '24px',
+      },
+      backgroundOpacity: {
+        '15': '0.15',
+      }
+    },
   },
   plugins: [],
-};
+}
+

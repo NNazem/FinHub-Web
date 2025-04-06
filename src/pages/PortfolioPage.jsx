@@ -5,6 +5,10 @@ import PortfolioHeader from "../components/portfolio/PortfolioHeader";
 import Navbar from "../components/layout/Navbar";
 import { getPortfolioByUserId } from "../api/api";
 import PortfolioLayout from "../components/portfolio/PortfolioLayout";
+import styled from "styled-components";
+import PortfolioNavbar from "../components/portfolio/PortfolioNavbar";
+
+
 
 function Portfolio() {
   const userId = 2;
@@ -33,8 +37,8 @@ function Portfolio() {
   }
 
   return (
-    <div style={{ display: "flex", flexDirection: "row" }}>
-      <Navbar
+    <div style={{ display: "flex", flexDirection: "column"}} >
+      <PortfolioNavbar
         portfolios={portfolios}
         setPortfolios={setPortfolios}
         userId={userId}

@@ -1,13 +1,11 @@
-import { Card } from "antd";
 import React, { useEffect, useState } from "react";
-import PortfolioPieChart from "./PortfolioPieChart";
 
-import styles from "../../styles/Portfolio.module.css";
-import PortfolioProducts from "./PortfolioProducts";
-import LineChart from "./PortfolioLineChart";
-import PortfolioTransactions from "./PortfolioTransactions";
+import ProductTable from "./ProductsTable";
+import TransactionsTable from "./TransactionsTable";
 import { getCryptoPerPortfolio, getTotalPerPortfolio } from "../../api/api";
 import PortfolioCharts from "./PortfolioCharts";
+import styled from "styled-components";
+
 
 export default function PortfolioLayout({ loading, selectedPortfolio }) {
   const [products, setProducts] = useState([]);
@@ -30,8 +28,8 @@ export default function PortfolioLayout({ loading, selectedPortfolio }) {
         loading={loading}
         totalValue={totalValue}
       />
-      <PortfolioProducts products={products} loading={loading} selectedPortfolio={selectedPortfolio} />
-      <PortfolioTransactions />
+      <ProductTable products={products} loading={loading} selectedPortfolio={selectedPortfolio} />
+      <TransactionsTable />
     </div>
   );
 }
