@@ -7,20 +7,6 @@ import GlassShine from "../ui/GlassShine"
 import GlassReflection from "../ui/GlassReflection"
 
 
-// Main container with dark background
-const DemoContainer = styled.div`
-  background: linear-gradient(135deg, #000000 0%, #1A1A1A 100%);
-  padding: 32px;
-  min-height: 800px;
-  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro', 'SF Pro Text', 'Helvetica Neue', sans-serif;
-  position: relative;
-  overflow: hidden;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`
-
-// Colorful glow effects
 const NeonAccent = styled.div`
   position: absolute;
   width: 150px;
@@ -59,7 +45,6 @@ const DetailsLink = styled.a`
   }
 `
 
-// Chart container
 const ChartContainer = styled.div`
   height: 400px;
   position: relative;
@@ -67,7 +52,6 @@ const ChartContainer = styled.div`
   margin-bottom: 16px;
 `
 
-// Simple legend container
 const LegendContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
@@ -84,6 +68,10 @@ const LegendItem = styled.div`
   gap: 8px;
   font-size: 16px;
   color: rgba(255, 255, 255, 0.9);
+
+   &:focus {
+    outline: none;
+  }
 `
 
 const ColorIndicator = styled.div`
@@ -94,12 +82,11 @@ const ColorIndicator = styled.div`
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 `
 
-// Selected asset info container
 const SelectedAssetInfo = styled.div`
   background: rgba(255, 255, 255, 0.05);
   border-radius: 16px;
-  padding: 16px;
-  margin-top: 24px;
+  padding: 11px;
+  margin-top: 0px;
   text-align: center;
   position: relative;
   z-index: 20;
@@ -126,8 +113,6 @@ const SelectedAssetPercentage = styled.div`
   font-size: 16px;
   color: rgba(255, 255, 255, 0.7);
 `
-
-// Arrow icon for the details link
 const ArrowIcon = () => (
   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path
@@ -139,8 +124,6 @@ const ArrowIcon = () => (
     />
   </svg>
 )
-
-// Sample data for the portfolio allocation
 const defaultData = [
   { name: "Bitcoin", value: 12500, color: "#F7931A" },
   { name: "Ethereum", value: 7200, color: "#627EEA" },
@@ -150,7 +133,6 @@ const defaultData = [
   { name: "Others", value: 480.42, color: "#8A8A8F" },
 ]
 
-// Custom active shape for better selection visualization
 const renderActiveShape = (props) => {
   const { cx, cy, innerRadius, outerRadius, startAngle, endAngle, fill } = props
 
@@ -166,16 +148,6 @@ const renderActiveShape = (props) => {
         fill={fill}
         filter="drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3))"
       />
-      <Sector
-        cx={cx}
-        cy={cy}
-        innerRadius={innerRadius - 5}
-        outerRadius={innerRadius - 1}
-        startAngle={startAngle}
-        endAngle={endAngle}
-        fill={fill}
-        filter="drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3))"
-      />
     </g>
   )
 }
@@ -183,13 +155,12 @@ const renderActiveShape = (props) => {
 export default function PortfolioPieionChart({
   data = defaultData,
   portfolioValue = 24680.42,
-  color = "#30D158", // iOS green
+  color = "#30D158", 
 }) {
   const [activeIndex, setActiveIndex] = useState(null)
 
   const totalValue = data.reduce((sum, item) => sum + item.value, 0)
 
-  // Calculate percentages for each asset
   const dataWithPercentage = data.map((item) => ({
     ...item,
     percentage: ((item.value / totalValue) * 100).toFixed(1),
@@ -203,7 +174,6 @@ export default function PortfolioPieionChart({
     setActiveIndex(null)
   }
 
-  // Get selected asset data
   const selectedAsset = activeIndex !== null ? dataWithPercentage[activeIndex] : null
 
   return (
@@ -245,6 +215,7 @@ export default function PortfolioPieionChart({
                     fill={entry.color}
                     style={{
                       filter: "drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3))",
+                      outline: 'none'
                     }}
                   />
                 ))}
@@ -253,8 +224,7 @@ export default function PortfolioPieionChart({
           </ResponsiveContainer>
         </ChartContainer>
 
-        {/* Simple legend */}
-        <LegendContainer>
+        {!selectedAsset && (<LegendContainer>
           {dataWithPercentage.map((entry, index) => (
             <LegendItem
               key={`legend-${index}`}
@@ -273,9 +243,7 @@ export default function PortfolioPieionChart({
               </div>
             </LegendItem>
           ))}
-        </LegendContainer>
-
-        {/* Selected asset information */}
+        </LegendContainer>)}
         {selectedAsset && (
           <SelectedAssetInfo>
             <SelectedAssetName>{selectedAsset.name}</SelectedAssetName>
