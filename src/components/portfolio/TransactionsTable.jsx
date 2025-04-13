@@ -170,8 +170,8 @@ const Pagination = styled.div`
 `
 
 const PaginationButton = styled.button`
-  background: ${(props) => (props.active ? "rgba(255, 255, 255, 0.15)" : "rgba(255, 255, 255, 0.05)")};
-  color: ${(props) => (props.active ? "white" : "rgba(255, 255, 255, 0.7)")};
+  background: ${(props) => (props.$active ? "rgba(255, 255, 255, 0.15)" : "rgba(255, 255, 255, 0.05)")};
+  color: ${(props) => (props.$active ? "white" : "rgba(255, 255, 255, 0.7)")};
   border: none;
   border-radius: 8px;
   padding: 6px 12px;
@@ -193,7 +193,7 @@ const Modal = styled.div`
   height: 100%;
   background: rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(5px);
-  display: ${(props) => (props.visible ? "flex" : "none")};
+  display: ${(props) => (props.$visible ? "flex" : "none")};
   align-items: center;
   justify-content: center;
   z-index: 1000;
@@ -296,7 +296,7 @@ const ModalActions = styled.div`
 `
 
 const Button = styled.button`
-  background: ${(props) => (props.primary ? "#30D158" : "rgba(255, 255, 255, 0.1)")};
+  background: ${(props) => (props.$primary ? "#30D158" : "rgba(255, 255, 255, 0.1)")};
   color: white;
   border: none;
   border-radius: 8px;
@@ -307,7 +307,7 @@ const Button = styled.button`
   transition: all 0.2s ease;
   
   &:hover {
-    background: ${(props) => (props.primary ? "#28BD4D" : "rgba(255, 255, 255, 0.15)")};
+    background: ${(props) => (props.$primary ? "#28BD4D" : "rgba(255, 255, 255, 0.15)")};
   }
 `
 
@@ -468,7 +468,7 @@ export default function TransactionsTable({
         {totalPages > 1 && (
           <Pagination>
             {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-              <PaginationButton key={page} active={page === currentPage} onClick={() => setCurrentPage(page)}>
+              <PaginationButton key={page} $active={page === currentPage} onClick={() => setCurrentPage(page)}>
                 {page}
               </PaginationButton>
             ))}
@@ -476,7 +476,7 @@ export default function TransactionsTable({
         )}
       </GlassPanel>
 
-      <Modal visible={modalVisible}>
+      <Modal $visible={modalVisible}>
         <ModalContent>
           <ModalTitle>Add Transaction</ModalTitle>
 
@@ -509,7 +509,7 @@ export default function TransactionsTable({
 
           <ModalActions>
             <Button onClick={() => setModalVisible(false)}>Cancel</Button>
-            <Button primary onClick={() => setModalVisible(false)}>
+            <Button $primary onClick={() => setModalVisible(false)}>
               Add
             </Button>
           </ModalActions>

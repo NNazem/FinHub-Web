@@ -16,7 +16,7 @@ const Modal = styled.div`
   height: 100%;
   background: rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(5px);
-  display: ${(props) => (props.visible ? "flex" : "none")};
+  display: ${(props) => (props.$visible ? "flex" : "none")};
   align-items: center;
   justify-content: center;
   z-index: 1000;
@@ -119,7 +119,7 @@ const ModalActions = styled.div`
 `
 
 const Button = styled.button`
-  background: ${(props) => (props.primary ? "#30D158" : "rgba(255, 255, 255, 0.1)")};
+  background: ${(props) => (props.$primary ? "#30D158" : "rgba(255, 255, 255, 0.1)")};
   color: white;
   border: none;
   border-radius: 8px;
@@ -130,7 +130,7 @@ const Button = styled.button`
   transition: all 0.2s ease;
   
   &:hover {
-    background: ${(props) => (props.primary ? "#28BD4D" : "rgba(255, 255, 255, 0.15)")};
+    background: ${(props) => (props.$primary ? "#28BD4D" : "rgba(255, 255, 255, 0.15)")};
   }
 `
 
@@ -140,7 +140,7 @@ export default function PortfolioNavbar({
   loading,
   refreshPortfolios
 }) {
-    const [selected, isSelected] = useState("");
+    const [selected, isSelected] = useState(portfolios[0].label);
     const [portfolioName, setPortfolioName] = useState("")
     const [modalVisible, setModalVisible] = useState(false)
 
@@ -197,8 +197,13 @@ export default function PortfolioNavbar({
                   style={{
                     display: "flex",
                   }}
+                  key={item.key}
                 >
                   <button
+                    onClick={() => {
+                        isSelected(item.label);
+                        setSelectedPortfolio(item.key);
+                    }}
                     className={`w-full flex items-center space-x-2 p-2 rounded-lg ${
                       selected === item.label
                         ? " bg-white/10 text-white"
@@ -220,7 +225,7 @@ export default function PortfolioNavbar({
         </button>
       </GlassPanel>
 
-      <Modal visible={modalVisible}>
+      <Modal $visible={modalVisible}>
         <ModalContent>
           <ModalTitle>Create new portfolio</ModalTitle>
 
@@ -235,8 +240,8 @@ export default function PortfolioNavbar({
 
           <ModalActions>
             <Button onClick={() => setModalVisible(false)}>Cancel</Button>
-            <Button primary onClick={handleSubmit} >
-              Add
+            <Button $primary onClick={handleSubmit}>
+                Add
             </Button>
           </ModalActions>
         </ModalContent>

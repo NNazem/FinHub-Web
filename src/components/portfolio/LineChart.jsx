@@ -105,7 +105,7 @@ const CurrentPrice = styled.div`
 const PriceChange = styled.div`
   font-size: 16px;
   font-weight: 500;
-  color: ${(props) => (props.isPositive ? "#30D158" : "#FF453A")};
+  color: ${(props) => (props.$isPositive ? "#30D158" : "#FF453A")};
   display: flex;
   align-items: center;
   text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
@@ -122,8 +122,8 @@ const TimeframeSelector = styled.div`
 
 // Glass-style buttons
 const TimeButton = styled.button`
-  background: ${(props) => (props.active ? "rgba(255, 255, 255, 0.15)" : "rgba(255, 255, 255, 0.05)")};
-  color: ${(props) => (props.active ? "white" : "rgba(255, 255, 255, 0.7)")};
+  background: ${(props) => (props.$active ? "rgba(255, 255, 255, 0.15)" : "rgba(255, 255, 255, 0.05)")};
+  color: ${(props) => (props.$active ? "white" : "rgba(255, 255, 255, 0.7)")};
   border: none;
   border-radius: 8px;
   padding: 6px 12px;
@@ -225,7 +225,6 @@ export default function LineChart({
         selectedPortfolio, activeTimeframe
       );
       setHistoricalData(historicalData);
-      console.log(historicalData)
     }
     fetchHistoricalData();
   }, [selectedPortfolio, activeTimeframe]);
@@ -296,29 +295,29 @@ export default function LineChart({
             {currencySymbol}
             {totalValue.toLocaleString()}
           </CurrentPrice>
-          <PriceChange isPositive={isPositive}>
+          <PriceChange $isPositive={isPositive}>
             {isPositive ? "↑" : "↓"} {Math.abs(priceChange).toLocaleString()} ({Math.abs(priceChangePercent).toFixed(2)}
             %)
           </PriceChange>
         </PriceDisplay>
 
         <TimeframeSelector>
-          <TimeButton active={activeTimeframe === "1D"} onClick={() => setActiveTimeframe("1D")}>
+          <TimeButton $active={activeTimeframe === "1D"} onClick={() => setActiveTimeframe("1D")}>
             1D
           </TimeButton>
-          <TimeButton active={activeTimeframe === "1W"} onClick={() => setActiveTimeframe("1W")}>
+          <TimeButton $active={activeTimeframe === "1W"} onClick={() => setActiveTimeframe("1W")}>
             1W
           </TimeButton>
-          <TimeButton active={activeTimeframe === "1M"} onClick={() => setActiveTimeframe("1M")}>
+          <TimeButton $active={activeTimeframe === "1M"} onClick={() => setActiveTimeframe("1M")}>
             1M
           </TimeButton>
-          <TimeButton active={activeTimeframe === "3M"} onClick={() => setActiveTimeframe("3M")}>
+          <TimeButton $active={activeTimeframe === "3M"} onClick={() => setActiveTimeframe("3M")}>
             3M
           </TimeButton>
-          <TimeButton active={activeTimeframe === "1Y"} onClick={() => setActiveTimeframe("1Y")}>
+          <TimeButton $active={activeTimeframe === "1Y"} onClick={() => setActiveTimeframe("1Y")}>
             1Y
           </TimeButton>
-          <TimeButton active={activeTimeframe === "ALL"} onClick={() => setActiveTimeframe("ALL")}>
+          <TimeButton $active={activeTimeframe === "ALL"} onClick={() => setActiveTimeframe("ALL")}>
             ALL
           </TimeButton>
         </TimeframeSelector>

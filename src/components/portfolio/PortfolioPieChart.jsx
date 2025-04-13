@@ -158,7 +158,6 @@ export default function PortfolioPieionChart({
   color = "#30D158", 
 }) {
 
-  console.log(data)
   const [activeIndex, setActiveIndex] = useState(null)
 
   const totalValue = data.reduce((sum, item) => sum + item.value, 0)

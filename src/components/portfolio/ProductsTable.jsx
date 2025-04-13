@@ -221,7 +221,7 @@ const Modal = styled.div`
   height: 100%;
   background: rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(5px);
-  display: ${(props) => (props.visible ? "flex" : "none")};
+  display: ${(props) => (props.$visible ? "flex" : "none")};
   align-items: center;
   justify-content: center;
   z-index: 1000;
@@ -324,7 +324,7 @@ const ModalActions = styled.div`
 `
 
 const Button = styled.button`
-  background: ${(props) => (props.primary ? "#30D158" : "rgba(255, 255, 255, 0.1)")};
+  background: ${(props) => (props.$primary ? "#30D158" : "rgba(255, 255, 255, 0.1)")};
   color: white;
   border: none;
   border-radius: 8px;
@@ -335,7 +335,7 @@ const Button = styled.button`
   transition: all 0.2s ease;
   
   &:hover {
-    background: ${(props) => (props.primary ? "#28BD4D" : "rgba(255, 255, 255, 0.15)")};
+    background: ${(props) => (props.$primary ? "#28BD4D" : "rgba(255, 255, 255, 0.15)")};
   }
 `
 
@@ -427,8 +427,8 @@ export default function ProductsTable({
         <GlassShine />
         <GlassReflection />
 
-        <NeonAccent color={color} style={{ top: "30px", left: "30px" }} />
-        <NeonAccent color={color} style={{ bottom: "50px", right: "40px" }} />
+        <NeonAccent $color={color} style={{ top: "30px", left: "30px" }} />
+        <NeonAccent $color={color} style={{ bottom: "50px", right: "40px" }} />
 
         <TableHeader>
           <TableTitle>Holdings</TableTitle>
@@ -453,7 +453,7 @@ export default function ProductsTable({
           </TableHead>
           <TableBody>
             {currentProducts.map((product) => (
-              <tr key={product.id}>
+              <tr key={`product-${product.id}-${product.Coin.id}`}>
                 <td>
                   <Avatar>
                     <img
@@ -504,7 +504,7 @@ export default function ProductsTable({
         )}
       </GlassPanel>
 
-      <Modal visible={modalVisible}>
+      <Modal $visible={modalVisible}>
         <ModalContent>
           <ModalTitle>Add Cryptocurrency</ModalTitle>
 
@@ -537,7 +537,7 @@ export default function ProductsTable({
 
           <ModalActions>
             <Button onClick={() => setModalVisible(false)}>Cancel</Button>
-            <Button primary onClick={() => setModalVisible(false)}>
+            <Button $primary onClick={() => setModalVisible(false)}>
               Add
             </Button>
           </ModalActions>
