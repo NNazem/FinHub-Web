@@ -1,10 +1,11 @@
 "use client"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Area, AreaChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts"
 import { styled } from "styled-components"
 import GlassShine from "../ui/GlassShine"
 import GlassReflection from "../ui/GlassReflection"
 import GlassPanel from "./GlassPanel"
+import { getTotalPerPortfolioGroupedByTimestamp } from "../../api/api"
 
 // Default Bitcoin data with real Date objects
 const defaultData = [
@@ -205,14 +206,29 @@ export default function LineChart({
   color = defaultColor,
   currencySymbol = "$",
   currencyName = "Bitcoin",
-  initialTheme = "dark", // Default theme is dark
+  initialTheme = "dark", 
+  totalValue,
+  selectedPortfolio
 }) {
   const [theme, setTheme] = useState(initialTheme)
   const [activeTimeframe, setActiveTimeframe] = useState("1M")
+  const [historicalData, setHistoricalData] = useState([]);
 
   const toggleTheme = () => {
     setTheme(theme === "dark" ? "light" : "dark")
   }
+
+  useEffect(() => {
+    async function fetchHistoricalData() {
+
+      const historicalData = await getTotalPerPortfolioGroupedByTimestamp(
+        selectedPortfolio, activeTimeframe
+      );
+      setHistoricalData(historicalData);
+      console.log(historicalData)
+    }
+    fetchHistoricalData();
+  }, [selectedPortfolio, activeTimeframe]);
 
   const formatDate = (date) => {
     return date.toLocaleDateString("en-US", {
@@ -273,12 +289,12 @@ export default function LineChart({
         <NeonAccent color={color} style={{ top: "30px", left: "30px" }} />
         <NeonAccent color={color} style={{ bottom: "50px", right: "40px" }} />
 
-        <PanelTitle theme={theme}>{currencyName} Price Chart</PanelTitle>
+        <PanelTitle theme={theme}>Portfolio Value Chart</PanelTitle>
 
         <PriceDisplay>
           <CurrentPrice>
             {currencySymbol}
-            {lastPrice.toLocaleString()}
+            {totalValue.toLocaleString()}
           </CurrentPrice>
           <PriceChange isPositive={isPositive}>
             {isPositive ? "↑" : "↓"} {Math.abs(priceChange).toLocaleString()} ({Math.abs(priceChangePercent).toFixed(2)}
@@ -309,7 +325,7 @@ export default function LineChart({
 
         <ChartWrapper>
           <ResponsiveContainer width="100%" height={418}>
-            <AreaChart data={chartData} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
+            <AreaChart data={historicalData} margin={{ top: 5, right: 20, bottom: 5, left: -40 }}>
               <defs>
                 <linearGradient id="colorGradient" x1="0" y1="0" x2="0" y2="1">
                   <stop
@@ -325,19 +341,29 @@ export default function LineChart({
                 </linearGradient>
               </defs>
               <XAxis
-                dataKey="formattedDate"
+                dataKey="timestamp"
                 stroke={currentColors.axisStroke}
                 tick={{ fill: currentColors.axisTick }}
                 axisLine={false}
                 tickLine={false}
+                tickFormatter={(entry) => {
+                  const dataPoint = new Date(entry);
+                  if (dataPoint) {
+                    return dataPoint.toLocaleDateString("en-US", {
+                      year: "numeric",
+                      month: "short",
+                      day: "numeric",
+                    })
+                  }
+                  return entry
+                }}
               />
               <YAxis
                 stroke={currentColors.axisStroke}
-                tick={{ fill: currentColors.axisTick }}
-                tickFormatter={(value) => `${currencySymbol}${value.toLocaleString()}`}
                 domain={["dataMin - 1000", "dataMax + 1000"]}
                 axisLine={false}
                 tickLine={false}
+                tick={false}
               />
               <Tooltip
                 contentStyle={{
@@ -349,24 +375,24 @@ export default function LineChart({
                   color: currentColors.tooltipTextColor,
                 }}
                 labelStyle={{ color: currentColors.tooltipLabelColor }}
-                labelFormatter={(value, entry) => {
+                labelFormatter={(entry) => {
                   // Get the original date from the data point
-                  const dataPoint = chartData[entry[0]?.payload.index]
+                  const dataPoint = new Date(entry);
                   if (dataPoint) {
-                    return dataPoint.date.toLocaleDateString("en-US", {
+                    return dataPoint.toLocaleDateString("en-US", {
                       weekday: "long",
                       year: "numeric",
                       month: "long",
                       day: "numeric",
                     })
                   }
-                  return value
+                  return entry
                 }}
-                formatter={(value) => [`${currencySymbol}${value.toLocaleString()}`, currencyName]}
+                formatter={(value) => [`${currencySymbol}${value.toLocaleString()}`, "Portfolio Value"]}
               />
               <Area
                 type="monotone"
-                dataKey="price"
+                dataKey="total"
                 stroke={color}
                 strokeWidth={3}
                 dot={{

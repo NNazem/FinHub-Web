@@ -16,19 +16,20 @@ function Portfolio() {
   const [portfolios, setPortfolios] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  async function fetchPortfolios() {
+    const response = await getPortfolioByUserId(userId);
+
+    const items = response.Portfolios.map((portfolio) => ({
+      key: portfolio.id,
+      label: portfolio.name,
+    }));
+
+    setPortfolios(items);
+    setSelectedPortfolio(items[0].key);
+    setLoading(false);
+  }
+
   useEffect(() => {
-    async function fetchPortfolios() {
-      const response = await getPortfolioByUserId(userId);
-
-      const items = response.Portfolios.map((portfolio) => ({
-        key: portfolio.id,
-        label: portfolio.name,
-      }));
-
-      setPortfolios(items);
-      setSelectedPortfolio(items[0].key);
-      setLoading(false);
-    }
     fetchPortfolios();
   }, []);
 
@@ -44,6 +45,7 @@ function Portfolio() {
         userId={userId}
         setSelectedPortfolio={setSelectedPortfolio}
         loading={loading}
+        refreshPortfolios={fetchPortfolios}
       />
       <div className={styles.Portfolio}>
         <PortfolioHeader />

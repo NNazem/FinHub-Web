@@ -14,8 +14,8 @@ export default function PortfolioCharts({selectedPortfolio, products, loading, t
     
   return (
     <div className={styles.chartWrapper}>
-        <LineChart />
-        <PortfolioPieChart />
+        <LineChart totalValue={totalValue} selectedPortfolio={selectedPortfolio}/>
+          <PortfolioPieChart/>
     </div>
   );
 }

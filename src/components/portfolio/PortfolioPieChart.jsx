@@ -157,6 +157,8 @@ export default function PortfolioPieionChart({
   portfolioValue = 24680.42,
   color = "#30D158", 
 }) {
+
+  console.log(data)
   const [activeIndex, setActiveIndex] = useState(null)
 
   const totalValue = data.reduce((sum, item) => sum + item.value, 0)
@@ -191,7 +193,7 @@ export default function PortfolioPieionChart({
           </DetailsLink>
         </AllocationTitle>
 
-        <ChartContainer>
+        <ChartContainer >
           <ResponsiveContainer width="100%" height="100%">
             <PieChart>
               <Pie
@@ -228,8 +230,6 @@ export default function PortfolioPieionChart({
           {dataWithPercentage.map((entry, index) => (
             <LegendItem
               key={`legend-${index}`}
-              onMouseEnter={() => setActiveIndex(index)}
-              onMouseLeave={() => setActiveIndex(null)}
               style={{
                 cursor: "pointer",
                 opacity: activeIndex === null || activeIndex === index ? 1 : 0.6,
