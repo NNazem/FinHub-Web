@@ -1,30 +1,11 @@
 "use client"
-import { Card } from "antd"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { styled } from "styled-components"
 import GlassPanel from "./GlassPanel"
 import GlassShine from "../ui/GlassShine"
 import GlassReflection from "../ui/GlassReflection"
-
-const PanelTitle = styled.h2`
-  font-size: 22px;
-  font-weight: 600;
-  color: rgba(255, 255, 255, 0.95);
-  margin-bottom: 20px;
-  letter-spacing: -0.5px;
-  position: relative;
-  z-index: 20;
-  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-`
-
-const DemoContainer = styled.div`
-  background: linear-gradient(135deg, #000000 0%, #1A1A1A 100%);
-  padding: 24px;
-  min-height: 600px;
-  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro', 'SF Pro Text', 'Helvetica Neue', sans-serif;
-  position: relative;
-  overflow: hidden;
-`
+import { addCoinToPortfolio, getAllCoins } from "../../api/api"
+import Select from 'react-select';
 
 // Colorful glow effects
 const NeonAccent = styled.div`
@@ -295,27 +276,6 @@ const FormInput = styled.input`
   }
 `
 
-const FormSelect = styled.select`
-  width: 100%;
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 8px;
-  color: white;
-  padding: 10px 12px;
-  font-size: 14px;
-  outline: none;
-  appearance: none;
-  
-  &:focus {
-    border-color: rgba(255, 255, 255, 0.3);
-    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.1);
-  }
-  
-  option {
-    background: rgba(28, 28, 30, 0.9);
-  }
-`
-
 const ModalActions = styled.div`
   display: flex;
   justify-content: flex-end;
@@ -339,76 +299,47 @@ const Button = styled.button`
   }
 `
 
-// Sample data
-const defaultProducts = [
-  {
-    id: 1,
-    Coin: { id: 1, name: "Bitcoin", symbol: "BTC", quote: { USD: { price: 50000 } } },
-    Amount: 0.5,
-    price: 45000,
-    current_profit: 2500,
-  },
-  {
-    id: 2,
-    Coin: { id: 1027, name: "Ethereum", symbol: "ETH", quote: { USD: { price: 3000 } } },
-    Amount: 5,
-    price: 2800,
-    current_profit: 1000,
-  },
-  {
-    id: 3,
-    Coin: { id: 52, name: "XRP", symbol: "XRP", quote: { USD: { price: 0.5 } } },
-    Amount: 10000,
-    price: 0.45,
-    current_profit: 500,
-  },
-  {
-    id: 4,
-    Coin: { id: 825, name: "Tether", symbol: "USDT", quote: { USD: { price: 1 } } },
-    Amount: 5000,
-    price: 1,
-    current_profit: 0,
-  },
-  {
-    id: 5,
-    Coin: { id: 1839, name: "Binance Coin", symbol: "BNB", quote: { USD: { price: 300 } } },
-    Amount: 10,
-    price: 280,
-    current_profit: 200,
-  },
-  {
-    id: 6,
-    Coin: { id: 2010, name: "Cardano", symbol: "ADA", quote: { USD: { price: 1.2 } } },
-    Amount: 2000,
-    price: 1.1,
-    current_profit: 200,
-  },
-  {
-    id: 7,
-    Coin: { id: 6636, name: "Polkadot", symbol: "DOT", quote: { USD: { price: 15 } } },
-    Amount: 100,
-    price: 14,
-    current_profit: 100,
-  },
-]
+const defaultColor = "#30D158"
 
-const defaultColor = "#30D158" // iOS green
+/*
+Todo: Please reformat this mess
+*/
 
 export default function ProductsTable({
   products = defaultProducts,
   color = defaultColor,
   loading = false,
   initialTheme = "dark", 
+  selectedPortfolio,
+  onAddCoin
 }) {
   const [theme, setTheme] = useState(initialTheme)
   const [searchValue, setSearchValue] = useState("")
   const [modalVisible, setModalVisible] = useState(false)
   const [currentPage, setCurrentPage] = useState(1)
+  const [coins, setCoins] = useState([]);
+  const [formData, setFormData] = useState({
+    coinId: "",
+    amount: "",
+    purchaseDate: "",
+    price: ""
+  })
+  const limit = 100
+  
+  const options = coins.map(coin => ({
+    value: coin.id,
+    label: coin.name
+  }))
+
   const itemsPerPage = 5
 
   const filteredProducts = products.filter((product) =>
     product.Coin.name.toLowerCase().includes(searchValue.toLowerCase()),
   )
+
+  const filteredOptions = options.filter((product) =>
+    product.label.toLowerCase().includes(searchValue.toLowerCase()),
+  ).slice(0, limit)
 
   const indexOfLastItem = currentPage * itemsPerPage
   const indexOfFirstItem = indexOfLastItem - itemsPerPage
@@ -417,6 +348,47 @@ export default function ProductsTable({
 
   const formatCurrency = (value) => {
     return new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(value)
+  }
+
+  function handleChange(e){
+    const {name, value} = e.target
+    setFormData((prev) => ({...prev, [name] : value}))
+  }
+
+  async function fetchAllCoins(){
+    const res = await getAllCoins();
+    setCoins(res);
+  }
+
+  useEffect(() => {
+    fetchAllCoins()
+  }, [])
+
+  function resetFormData(){
+    setFormData({
+      coinId: "",
+      amount: "",
+      purchaseDate: "",
+      price: ""
+    })
+  }
+
+  async function handleAddCoinToPortfolio(){
+    try{
+      setModalVisible(false);
+      const req = {
+        portfolio_id : Number(selectedPortfolio),
+        coin_id : Number(formData.coinId),
+        amount : Number(formData.amount),
+      }
+
+      await onAddCoin(req)
+
+      resetFormData()
+    }catch (err) {
+      setModalVisible(true)
+    }
+
   }
 
   return (
@@ -507,37 +479,57 @@ export default function ProductsTable({
       <Modal $visible={modalVisible}>
         <ModalContent>
           <ModalTitle>Add Cryptocurrency</ModalTitle>
-
           <FormGroup>
             <FormLabel>Cryptocurrency</FormLabel>
-            <FormSelect>
-              <option value="">Select a cryptocurrency</option>
-              <option value="bitcoin">Bitcoin</option>
-              <option value="ethereum">Ethereum</option>
-              <option value="xrp">XRP</option>
-              <option value="cardano">Cardano</option>
-              <option value="polkadot">Polkadot</option>
-            </FormSelect>
+            <Select 
+              onInputChange={(term) => setSearchValue(term)}
+              className="basic-single"
+              classNamePrefix="select"
+              options={filteredOptions}
+              styles={{
+                control: (base) => ({
+                  ...base,
+                  background: 'rgba(255,255,255,0.1)',
+                  borderColor: 'rgba(255,255,255,0.2)',
+                  color: 'white'
+                }),
+                singleValue: (base) => ({
+                  ...base,
+                  color: 'white'
+                }),
+                menu: (base) => ({
+                  ...base,
+                  background: 'rgba(28, 28, 30, 0.9)',
+                }),
+                option: (base) => ({
+                  ...base,
+                  background: 'rgba(28, 28, 30, 0.9)',
+                  color: 'white',
+                }),
+              }}
+              onChange={opt => setFormData(prev => ({...prev, coinId : opt.value}))}
+              value={filteredOptions.find(opt => opt.value === formData.coinId) || null}
+            />
           </FormGroup>
 
           <FormGroup>
             <FormLabel>Amount</FormLabel>
-            <FormInput type="number" placeholder="Enter amount" />
+            <FormInput name="amount" type="number" placeholder="Enter amount" value={formData.amount} onChange={handleChange} />
           </FormGroup>
 
           <FormGroup>
             <FormLabel>Purchase Date</FormLabel>
-            <FormInput type="date" />
+            <FormInput name="purchaseDate" type="date" value={formData.purchaseDate} onChange={handleChange} />
           </FormGroup>
 
           <FormGroup>
             <FormLabel>Price</FormLabel>
-            <FormInput type="number" placeholder="Enter purchase price" />
+            <FormInput name="price" type="number" placeholder="Enter purchase price" value={formData.price} onChange={handleChange} />
           </FormGroup>
 
           <ModalActions>
             <Button onClick={() => setModalVisible(false)}>Cancel</Button>
-            <Button $primary onClick={() => setModalVisible(false)}>
+            <Button $primary onClick={handleAddCoinToPortfolio}>
               Add
             </Button>
           </ModalActions>

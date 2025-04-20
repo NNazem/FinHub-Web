@@ -24,16 +24,22 @@ function App() {
 
   return (
     <DemoContainer style={{display:"flex", flexDirection: "row", gap: "16px"}}>
-      <Navbar />
+      <Navbar onClickTab={setActiveTab} activeTab={activeTab}/>
       <div  style={{display:"flex", flexDirection: "column", width: "100%"}}>
+        {
+          activeTab === "Dashboard" && <div> test </div>
+        }
         {
           activeTab === "Portfolio" && <PortfolioPage />
         }
         {
-          activeTab === "Insights" && <h1>Insights</h1>
+          activeTab === "Markets" &&  <div> test </div>
         }
         {
-          activeTab === "Settings" && <h1>Settings</h1>
+          activeTab === "Analytics" && <div> test </div>
+        }
+        {
+          activeTab === "Settings" && <div> test </div>
         }
       </div>
     </DemoContainer>

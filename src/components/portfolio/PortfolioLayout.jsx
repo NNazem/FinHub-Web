@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import ProductTable from "./ProductsTable";
 import TransactionsTable from "./TransactionsTable";
-import { getCryptoPerPortfolio, getTotalPerPortfolio } from "../../api/api";
+import { addCoinToPortfolio, getCryptoPerPortfolio, getTotalPerPortfolio } from "../../api/api";
 import PortfolioCharts from "./PortfolioCharts";
 import styled from "styled-components";
 
@@ -10,15 +10,24 @@ import styled from "styled-components";
 export default function PortfolioLayout({ loading, selectedPortfolio }) {
   const [products, setProducts] = useState([]);
   const [totalValue, setTotalValue] = useState(0);
+  const [refreshKey, setRefreshKey] = useState(0);
+
+  async function fetchUserCoins() {
+    const response = await getCryptoPerPortfolio(selectedPortfolio);
+    setProducts(response.Coins);
+    const totalValueResponse = await getTotalPerPortfolio(selectedPortfolio);
+    setTotalValue(totalValueResponse.total);
+  }
+
   useEffect(() => {
-    async function fetchUserCoins() {
-      const response = await getCryptoPerPortfolio(selectedPortfolio);
-      setProducts(response.Coins);
-      const totalValueResponse = await getTotalPerPortfolio(selectedPortfolio);
-      setTotalValue(totalValueResponse.total);
-    }
     fetchUserCoins();
-  }, [selectedPortfolio]);
+  }, [selectedPortfolio, refreshKey]);
+
+  async function handleAddCoin(req){
+    await addCoinToPortfolio(req)
+
+    await fetchUserCoins();
+  }
 
   return (
     <div>
@@ -28,7 +37,7 @@ export default function PortfolioLayout({ loading, selectedPortfolio }) {
         loading={loading}
         totalValue={totalValue}
       />
-      <ProductTable products={products} loading={loading} selectedPortfolio={selectedPortfolio} />
+      <ProductTable products={products} loading={loading} selectedPortfolio={selectedPortfolio} setRefreshKey={setRefreshKey} onAddCoin={handleAddCoin}/>
       <TransactionsTable />
     </div>
   );
