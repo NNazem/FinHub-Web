@@ -440,9 +440,9 @@ export default function ProductsTable({
                   </Avatar>
                 </td>
                 <td>{product.Coin.name}</td>
-                <td>{product.Amount}</td>
-                <td>{formatCurrency(product.Coin.quote.USD.price * product.Amount)}</td>
-                <td>{formatCurrency(product.price)}</td>
+                <td>{product.amount}</td>
+                <td>{formatCurrency(product.Coin.quote.USD.price * product.amount)}</td>
+                <td>{formatCurrency(product.entry_price)}</td>
                 <td style={{ color: product.current_profit > 0 ? "#30D158" : "#FF453A", fontWeight: "bold" }}>
                   {formatCurrency(product.current_profit)}
                 </td>
